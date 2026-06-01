@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tierra de Nuevo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tierra: '#8B4513',
+                        pasto: '#228B22',
+                        agua: '#1E90FF',
+                        piedra: '#696969',
+                        cueva: '#2F2F2F',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .transform-inclinar {
+                transform: rotate(21.5deg); /* ✅ Aquí está tu inclinación, 21,5 grados tal cual pediste */
+            }
+            .sombra-suave {
+                box-shadow: 0 0 60px rgba(0,0,0,0.3);
+            }
+        }
+    </style>
+</head>
+<body class="bg-sky-900 min-h-screen overflow-hidden">
+
+<!-- ✅ EL SOL -->
+<div class="absolute top-10 right-10 w-32 h-32 bg-yellow-400 rounded-full sombra-suave"></div>
+
+<!-- ✅ TU PLANETA TIERRA, CON LA MEDIDA QUE QUEREMOS -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <!-- El planeta entero, inclinado como dijiste -->
+    <div class="w-[600px] h-[600px] bg-gradient-to-br from-pasto to-tierra rounded-full transform-inclinar relative overflow-hidden sombra-suave">
+        
+        <!-- ✅ EL AGUA, ocupa gran parte como la tierra real -->
+        <div class="absolute w-[120%] h-[120%] bg-agua/80 rounded-full -top-[10%] -left-[10%]"></div>
+
+        <!-- ✅ TIERRA Y MONTAÑAS -->
+        <div class="absolute top-[15%] left-[10%] w-[40%] h-[35%] bg-pasto rounded-[40%]"></div>
+        <div class="absolute top-[55%] left-[45%] w-[50%] h-[40%] bg-pasto rounded-[30%]"></div>
+        <div class="absolute top-[30%] left-[60%] w-[35%] h-[30%] bg-pasto/90 rounded-[50%]"></div>
+
+        <!-- ✅ ÁRBOLES, muchos por todos lados -->
+        <div class="absolute top-[20%] left-[15%] w-1 h-8 bg-tierra">
+            <div class="absolute -top-6 -left-3 w-7 h-7 bg-green-800 rounded-full"></div>
+        </div>
+        <div class="absolute top-[22%] left-[18%] w-1 h-6 bg-tierra">
+            <div class="absolute -top-5 -left-2 w-6 h-6 bg-green-700 rounded-full"></div>
+        </div>
+        <div class="absolute top-[60%] left-[50%] w-1 h-9 bg-tierra">
+            <div class="absolute -top-7 -left-3 w-8 h-8 bg-green-800 rounded-full"></div>
+        </div>
+        <div class="absolute top-[65%] left-[55%] w-1 h-7 bg-tierra">
+            <div class="absolute -top-6 -left-2 w-7 h-7 bg-green-700 rounded-full"></div>
+        </div>
+        <div class="absolute top-[35%] left-[65%] w-1 h-8 bg-tierra">
+            <div class="absolute -top-6 -left-3 w-7 h-7 bg-green-800 rounded-full"></div>
+        </div>
+
+        <!-- ✅ CUEVAS, escondidas en las piedras y montañas -->
+        <div class="absolute top-[70%] left-[25%] w-12 h-10 bg-piedra rounded-t-lg">
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-6 bg-cueva rounded-t-md"></div>
+        </div>
+        <div class="absolute top-[25%] left-[75%] w-10 h-8 bg-piedra rounded-t-lg">
+            <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-5 bg-cueva rounded-t-md"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- ✅ MENSAJE AL ENTRAR, tal cual tu historia -->
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 bg-black/70 text-white p-6 rounded-xl max-w-lg text-center">
+    <h2 class="text-2xl font-bold mb-3">🌍 TIERRA DE NUEVO</h2>
+    <p class="mb-4">Pasaron 2000 años... para vos fueron solo 5 minutos.</p>
+    <p class="text-sm text-gray-300">Una cueva, caca de murciélago te cayó encima y volviste a ser humano. Estás sin ropa, sin nada. Tenés que empezar todo de nuevo: buscar hojas para taparte, conseguir comida, explorar, construir... y ¡cuidado con lo que hay escondido!</p>
+    <button onclick="empezar()" class="mt-4 bg-green-600 px-6 py-3 rounded-lg font-bold hover:bg-green-700">
+        🚀 EMPEZAR AHORA
+    </button>
+</div>
+
+<script>
+// ✅ Cuando tocas el botón, entras directo al juego, sin cuentas ni nada
+function empezar() {
+    // Acá después vamos a poner todo lo que pasa cuando empezás: tu personaje, misiones, etc.
+    alert("¡Bienvenido a Tierra de Nuevo! 🪨🌍 Empezá a explorar, construir y sobrevivir.");
+    // Después cambiamos esto para que pase directo al juego sin carteles
+}
+</script>
+
+</body>
+</html>
