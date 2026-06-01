@@ -11,11 +11,18 @@
                 extend: {
                     colors: {
                         pasto: '#2d993a',
+                        pastoOscuro: '#1a5c22',
                         tierra: '#8B4513',
-                        piedra: '#5a5a5a',
+                        tierraClara: '#c19a6b',
+                        piedra: '#4a4a4a',
+                        piedraClara: '#7a7a7a',
                         metal: '#2c3e50',
-                        bosque: '#1b5e20',
+                        metalBrillante: '#607d8b',
                         luzverde: '#00ff88',
+                        cielo: '#87ceeb',
+                        cieloOscuro: '#4682b4',
+                        piel: '#f5cba7',
+                        ropa: '#2c3e50',
                     }
                 }
             }
@@ -24,94 +31,132 @@
     <style type="text/tailwindcss">
         @layer utilities {
             .sombra-suave {
-                box-shadow: 0 0 40px rgba(0,0,0,0.2);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
             }
             .brillo-verde {
                 box-shadow: 0 0 30px #00ff88, 0 0 60px #00ff8880;
             }
+            .degradado-cielo {
+                background: linear-gradient(180deg, #1e3a8a 0%, #3b82f6 40%, #93c5fd 100%);
+            }
+            .relieve {
+                box-shadow: inset 0 2px 2px rgba(255,255,255,0.15), inset 0 -2px 2px rgba(0,0,0,0.2);
+            }
+            .animar-caminar {
+                animation: caminar 0.4s infinite alternate ease-in-out;
+            }
+            @keyframes caminar {
+                from { transform: translateY(0); }
+                to { transform: translateY(-3px); }
+            }
         }
     </style>
 </head>
-<body class="bg-sky-900 min-h-screen overflow-hidden">
+<body class="min-h-screen overflow-hidden select-none">
 
 <!-- PANTALLA DE INICIO -->
-<div id="pantallaInicio" class="fixed inset-0 bg-sky-900 flex items-center justify-center z-50">
-    <div class="text-center">
-        <h1 class="text-6xl font-bold text-white mb-10">TIERRA DE NUEVO</h1>
-        <button onclick="entrarAlJuego()" class="bg-green-600 text-white text-2xl font-bold px-16 py-6 rounded-2xl sombra-suave hover:bg-green-700 transition-all">
+<div id="pantallaInicio" class="fixed inset-0 degradado-cielo flex items-center justify-center z-50">
+    <div class="text-center bg-black/40 p-12 rounded-3xl sombra-suave">
+        <h1 class="text-7xl font-bold text-white mb-10 tracking-wider">TIERRA DE NUEVO</h1>
+        <button onclick="entrarAlJuego()" class="bg-green-600 text-white text-2xl font-bold px-16 py-6 rounded-2xl sombra-suave hover:bg-green-700 transition-all transform hover:scale-105">
             🚀 INICIAR JUEGO
         </button>
     </div>
 </div>
 
-<!-- TODO EL JUEGO ADENTRO -->
-<div id="juego" class="hidden min-h-screen bg-gradient-to-b from-sky-600 to-sky-300 relative overflow-hidden">
+<!-- EL JUEGO -->
+<div id="juego" class="hidden min-h-screen relative overflow-hidden">
+
+    <!-- CIELO CON NUBES -->
+    <div class="absolute top-0 left-0 w-full h-2/3 degradado-cielo">
+        <div class="absolute top-10 left-10 w-32 h-16 bg-white/80 rounded-full blur-md"></div>
+        <div class="absolute top-16 left-20 w-40 h-20 bg-white/70 rounded-full blur-md"></div>
+        <div class="absolute top-32 right-20 w-36 h-18 bg-white/60 rounded-full blur-md"></div>
+    </div>
 
     <!-- BOTONES DE ARRIBA -->
-    <div class="absolute top-5 right-5 z-10">
-        <button id="botonMicro" onclick="cambiarMicro()" class="bg-black/60 text-white text-2xl p-4 rounded-full sombra-suave">
-            🎤
-        </button>
-    </div>
-    <div class="absolute top-5 left-5 z-10">
-        <a href="https://discord.com" target="_blank" class="bg-[#5865F2] text-white text-xl font-bold px-5 py-3 rounded-xl sombra-suave flex items-center gap-2">
+    <div class="absolute top-6 left-6 z-10">
+        <a href="https://discord.com" target="_blank" class="bg-[#5865F2] text-white text-xl font-bold px-6 py-4 rounded-xl sombra-suave flex items-center gap-3 hover:bg-[#4752c4] transition-all">
             💬 DISCORD OFICIAL
         </a>
     </div>
-
-    <!-- LA PLANICIE, MUCHA NATURALEZA -->
-    <div class="absolute bottom-0 w-full h-3/4 bg-gradient-to-t from-tierra to-pasto"></div>
-
-    <!-- ÁRBOLES, PLANTAS Y VIDA -->
-    <div class="absolute bottom-10 left-[5%]">
-        <div class="w-2 h-20 bg-tierra"></div>
-        <div class="absolute -top-12 -left-6 w-16 h-20 bg-bosque rounded-full"></div>
-    </div>
-    <div class="absolute bottom-8 left-[12%]">
-        <div class="w-2 h-16 bg-tierra"></div>
-        <div class="absolute -top-10 -left-5 w-14 h-16 bg-green-800 rounded-full"></div>
-    </div>
-    <div class="absolute bottom-12 left-[18%]">
-        <div class="w-1 h-24 bg-tierra"></div>
-        <div class="absolute -top-14 -left-7 w-20 h-24 bg-bosque rounded-full"></div>
-    </div>
-    <div class="absolute bottom-6 right-[10%]">
-        <div class="w-2 h-18 bg-tierra"></div>
-        <div class="absolute -top-11 -left-5 w-15 h-18 bg-green-700 rounded-full"></div>
-    </div>
-    <div class="absolute bottom-10 right-[18%]">
-        <div class="w-2 h-22 bg-tierra"></div>
-        <div class="absolute -top-13 -left-6 w-18 h-22 bg-bosque rounded-full"></div>
-    </div>
-    <div class="absolute bottom-0 left-[30%] w-32 h-16 bg-green-900/70 rounded-t-full"></div>
-    <div class="absolute bottom-0 left-[60%] w-40 h-20 bg-green-800/60 rounded-t-full"></div>
-    <div class="absolute bottom-0 right-[25%] w-28 h-12 bg-green-900/70 rounded-t-full"></div>
-
-    <!-- MONTAÑAS Y LA CUEVA DONDE ESTÁ TODO -->
-    <div class="absolute bottom-[30%] left-0 w-[40%] h-[40%] bg-piedra/80 rounded-tr-[100%]"></div>
-    <div class="absolute bottom-[20%] right-0 w-[50%] h-[50%] bg-piedra/70 rounded-tl-[80%]"></div>
-
-    <!-- LA CUEVA, ADENTRO ESTÁ LA PUERTA -->
-    <div class="absolute bottom-[35%] left-[15%] w-20 h-16 bg-piedra rounded-t-lg">
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-12 h-10 bg-black/90 rounded-t-md"></div>
+    <div class="absolute top-6 right-6 z-10">
+        <button id="botonMicro" onclick="cambiarMicro()" class="bg-black/60 backdrop-blur-sm text-white text-2xl p-5 rounded-full sombra-suave hover:bg-black/70 transition-all">
+            🎤
+        </button>
     </div>
 
-    <!-- PUERTA SECRETA: SOLO VOS LA VES Y LA ABRÍS -->
-    <div id="puertaSecreta" class="absolute bottom-[32%] left-[14%] hidden">
-        <div class="w-24 h-32 bg-metal border-4 border-gray-300 rounded-sm sombra-suave flex items-center justify-center">
-            <div class="w-16 h-2 bg-gray-400 rounded-full"></div>
-            <p class="absolute -bottom-8 text-gray-300 text-sm">🔒 Solo el creador puede entrar</p>
+    <!-- TERRENO Y PLANICIE -->
+    <div class="absolute bottom-0 w-full h-3/4 bg-gradient(to top, #5c3a21 0%, #8B4513 30%, #2d993a 100%)"></div>
+
+    <!-- MONTAÑAS -->
+    <div class="absolute bottom-[25%] left-0 w-[45%] h-[45%] bg-gradient(to top, #2f2f2f 0%, #5a5a5a 60%, #888888 100%) rounded-tr-[120px] sombra-suave"></div>
+    <div class="absolute bottom-[15%] right-0 w-[55%] h-[55%] bg-gradient(to top, #2f2f2f 0%, #5a5a5a 60%, #888888 100%) rounded-tl-[150px] sombra-suave"></div>
+
+    <!-- CUEVA -->
+    <div class="absolute bottom-[30%] left-[12%] w-28 h-24 bg-gradient(to top, #111111 0%, #333333 100%) rounded-t-lg sombra-suave">
+        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-14 bg-black rounded-t-md"></div>
+    </div>
+
+    <!-- ÁRBOLES -->
+    <div class="absolute bottom-4 left-[5%]">
+        <div class="w-3 h-24 bg-gradient(to top, #5c3a21 0%, #8B4513 100%) rounded-full sombra-suave"></div>
+        <div class="absolute -top-16 -left-8 w-24 h-28 bg-gradient(to top, #1a5c22 0%, #2d993a 100%) rounded-full sombra-suave"></div>
+    </div>
+    <div class="absolute bottom-6 left-[20%]">
+        <div class="w-2 h-20 bg-gradient(to top, #5c3a21 0%, #8B4513 100%) rounded-full sombra-suave"></div>
+        <div class="absolute -top-14 -left-6 w-20 h-24 bg-gradient(to top, #1a5c22 0%, #2d993a 100%) rounded-full sombra-suave"></div>
+    </div>
+
+    <!-- 🧍 TU JUGADOR, REAL Y COMPLETO -->
+    <div id="jugador" class="absolute bottom-[20%] left-1/2 -translate-x-1/2 transition-all duration-100 z-10">
+        <!-- Cuerpo del personaje -->
+        <div class="relative w-12 h-24">
+            <!-- Cabeza -->
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-piel rounded-full sombra-suave">
+                <div class="absolute top-3 left-2 w-2 h-2 bg-black rounded-full"></div>
+                <div class="absolute top-3 right-2 w-2 h-2 bg-black rounded-full"></div>
+                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-3 h-1 bg-red-300 rounded-full"></div>
+            </div>
+            <!-- Cuerpo / Ropa -->
+            <div class="absolute top-8 left-1/2 -translate-x-1/2 w-8 h-12 bg-ropa rounded-t-lg sombra-suave"></div>
+            <!-- Brazos -->
+            <div class="absolute top-10 -left-2 w-3 h-8 bg-piel rounded-full"></div>
+            <div class="absolute top-10 -right-2 w-3 h-8 bg-piel rounded-full"></div>
+            <!-- Piernas -->
+            <div id="piernaIzq" class="absolute top-20 left-1 w-3 h-10 bg-ropa rounded-b-lg"></div>
+            <div id="piernaDer" class="absolute top-20 right-1 w-3 h-10 bg-ropa rounded-b-lg"></div>
         </div>
     </div>
 
-    <!-- ADENTRO DEL BÚNKER, TODO LO QUE ME CONTÁSTE -->
-    <div id="zonaSecreta" class="fixed inset-0 bg-gray-900/98 hidden z-20 overflow-y-auto">
+    <!-- PUERTA SECRETA -->
+    <div id="puertaSecreta" class="absolute bottom-[27%] left-[11%] hidden">
+        <div class="w-28 h-36 bg-gradient(135deg, #2c3e50 0%, #607d8b 50%, #2c3e50 100%) border-2 border-gray-300/60 rounded-sm sombra-suave relieve flex items-center justify-center">
+            <div class="w-18 h-3 bg-gray-400 rounded-full"></div>
+            <p class="absolute -bottom-10 text-gray-200 text-sm font-medium">🔒 Solo el creador puede abrir</p>
+        </div>
+    </div>
+
+    <!-- 🎮 CONTROLES PARA MOVER AL JUGADOR (abajo a la derecha) -->
+    <div class="absolute bottom-8 right-8 z-10 grid grid-cols-3 gap-2">
+        <div></div>
+        <button id="botonArriba" class="w-16 h-16 bg-black/60 backdrop-blur-sm text-white text-3xl rounded-full sombra-suave active:bg-black/80">⬆️</button>
+        <div></div>
+        <button id="botonIzquierda" class="w-16 h-16 bg-black/60 backdrop-blur-sm text-white text-3xl rounded-full sombra-suave active:bg-black/80">⬅️</button>
+        <div></div>
+        <button id="botonDerecha" class="w-16 h-16 bg-black/60 backdrop-blur-sm text-white text-3xl rounded-full sombra-suave active:bg-black/80">➡️</button>
+        <div></div>
+        <button id="botonAbajo" class="w-16 h-16 bg-black/60 backdrop-blur-sm text-white text-3xl rounded-full sombra-suave active:bg-black/80">⬇️</button>
+    </div>
+
+    <!-- ADENTRO DEL BÚNKER -->
+    <div id="zonaSecreta" class="fixed inset-0 bg-gradient(to bottom, #121212 0%, #1f1f1f 100%) hidden z-20 overflow-y-auto">
         <div class="max-w-4xl mx-auto p-8 text-white">
-            <button onclick="cerrarSecreto()" class="mb-8 bg-red-700 px-6 py-3 rounded-xl font-bold hover:bg-red-800">
+            <button onclick="cerrarSecreto()" class="mb-8 bg-gradient(to bottom, #dc2626 0%, #991b1b 100%) px-8 py-4 rounded-xl font-bold sombra-suave hover:brightness-110 transition-all">
                 ← VOLVER AL MUNDO
             </button>
 
-            <h1 class="text-4xl font-bold text-center mb-8">🔴 BÚNKER SUBTERRÁNEO - BASE ARGENTINA</h1>
+            <h1 class="text-4xl font-bold text-center mb-8 text-gray-100">🔴 BÚNKER SUBTERRÁNEO - BASE ARGENTINA</h1>
 
             <div class="bg-gray-800/70 p-6 rounded-xl mb-8">
                 <h2 class="text-2xl font-bold mb-4">📜 LA HISTORIA</h2>
@@ -124,7 +169,6 @@
                 </p>
             </div>
 
-            <!-- EL PORTAL Y MEDUSA -->
             <div class="bg-gray-800/70 p-6 rounded-xl mb-8 text-center">
                 <h2 class="text-2xl font-bold mb-6">🟢 EL PORTAL Y MEDUSA</h2>
                 <div class="w-64 h-64 mx-auto rounded-full bg-luzverde/20 brillo-verde flex items-center justify-center mb-6">
@@ -142,7 +186,6 @@
                 </button>
             </div>
 
-            <!-- ARMAS Y EQUIPO QUE HAY ADENTRO -->
             <div class="bg-gray-800/70 p-6 rounded-xl">
                 <h2 class="text-2xl font-bold mb-4">🔫 ARMAS Y EQUIPO GUARDADO</h2>
                 <p class="text-lg mb-4">Acá hay de todo, muy bien guardado y resistente:</p>
@@ -157,7 +200,6 @@
         </div>
     </div>
 
-    <!-- EFECTO CUANDO ACTIVÁS A MEDUSA -->
     <div id="efectoMedusa" class="fixed inset-0 bg-luzverde/90 hidden z-30 flex items-center justify-center">
         <div class="text-center text-black">
             <h1 class="text-7xl font-bold mb-6">🟢 ONDA EXPANSIVA</h1>
@@ -172,10 +214,85 @@
 </div>
 
 <script>
+// Variables del jugador
+let posX = window.innerWidth / 2;
+let posY = window.innerHeight * 0.8;
+const velocidad = 8;
+let caminando = false;
+
 // Entrar al juego
 function entrarAlJuego() {
     document.getElementById('pantallaInicio').classList.add('hidden');
     document.getElementById('juego').classList.remove('hidden');
+    actualizarPosicion();
+}
+
+// Actualizar dónde está el jugador
+function actualizarPosicion() {
+    const jugador = document.getElementById('jugador');
+    jugador.style.left = posX + 'px';
+    jugador.style.bottom = posY + 'px';
+}
+
+// Animación de caminar
+function animarCaminar(estado) {
+    const izq = document.getElementById('piernaIzq');
+    const der = document.getElementById('piernaDer');
+    if(estado) {
+        izq.classList.add('animar-caminar');
+        der.classList.add('animar-caminar');
+    } else {
+        izq.classList.remove('animar-caminar');
+        der.classList.remove('animar-caminar');
+    }
+}
+
+// Controles con botones
+document.getElementById('botonArriba').addEventListener('mousedown', () => { caminando = true; mover('arriba'); });
+document.getElementById('botonAbajo').addEventListener('mousedown', () => { caminando = true; mover('abajo'); });
+document.getElementById('botonIzquierda').addEventListener('mousedown', () => { caminando = true; mover('izquierda'); });
+document.getElementById('botonDerecha').addEventListener('mousedown', () => { caminando = true; mover('derecha'); });
+
+document.addEventListener('mouseup', () => { caminando = false; animarCaminar(false); });
+document.addEventListener('touchend', () => { caminando = false; animarCaminar(false); });
+
+// También se puede mover con las teclas del teclado
+let teclasPresionadas = {};
+document.addEventListener('keydown', (e) => {
+    teclasPresionadas[e.key] = true;
+    caminando = true;
+    moverConTeclas();
+});
+document.addEventListener('keyup', (e) => {
+    teclasPresionadas[e.key] = false;
+    if(!Object.values(teclasPresionadas).some(v => v)) {
+        caminando = false;
+        animarCaminar(false);
+    }
+});
+
+function moverConTeclas() {
+    if(teclasPresionadas['ArrowUp'] || teclasPresionadas['w']) mover('arriba');
+    if(teclasPresionadas['ArrowDown'] || teclasPresionadas['s']) mover('abajo');
+    if(teclasPresionadas['ArrowLeft'] || teclasPresionadas['a']) mover('izquierda');
+    if(teclasPresionadas['ArrowRight'] || teclasPresionadas['d']) mover('derecha');
+}
+
+// Función para mover al personaje
+function mover(direccion) {
+    animarCaminar(true);
+    if(direccion === 'arriba' && posY < window.innerHeight * 0.9) posY += velocidad;
+    if(direccion === 'abajo' && posY > 50) posY -= velocidad;
+    if(direccion === 'izquierda' && posX > 20) posX -= velocidad;
+    if(direccion === 'derecha' && posX < window.innerWidth - 20) posX += velocidad;
+    actualizarPosicion();
+
+    // Ver si llegaste a la puerta secreta
+    const puertaX = window.innerWidth * 0.12;
+    const puertaY = window.innerHeight * 0.27;
+    if(Math.abs(posX - puertaX) < 30 && Math.abs(posY - puertaY) < 30) {
+        document.getElementById('puertaSecreta').classList.remove('hidden');
+    }
 }
 
 // Control del micrófono
@@ -188,37 +305,34 @@ function cambiarMicro() {
     boton.classList.toggle('bg-black/60', microEncendido);
 }
 
-// ✨ SOLO VOS PODÉS ENTRAR: escribí tu clave en el teclado para que aparezca la puerta
+// Clave para creador
 let clave = "";
-const CLAVE_CREADOR = "soyelcreador123"; // Podés cambiar esto por lo que quieras
-
+const CLAVE_CREADOR = "soyelcreador123";
 document.addEventListener('keydown', (e) => {
     clave += e.key.toLowerCase();
     if(clave.includes(CLAVE_CREADOR)) {
         document.getElementById('puertaSecreta').classList.remove('hidden');
-        clave = ""; // Se reinicia para que no se active de más
+        clave = "";
     }
 });
 
-// Abrir la zona secreta cuando tocás la puerta
+// Entrar y salir del secreto
 document.getElementById('puertaSecreta').addEventListener('click', () => {
     document.getElementById('zonaSecreta').classList.remove('hidden');
 });
-
-// Volver afuera
 function cerrarSecreto() {
     document.getElementById('zonaSecreta').classList.add('hidden');
 }
 
-// Activar a Medusa y ver lo que pasa
+// Activar Medusa
 function activarMedusa() {
     document.getElementById('efectoMedusa').classList.remove('hidden');
 }
-
 function cerrarEfecto() {
     document.getElementById('efectoMedusa').classList.add('hidden');
 }
 </script>
 
 </body>
-</html>
+                    </html>
+                    
