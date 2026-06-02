@@ -87,7 +87,7 @@
     </div>
 
     <!-- TERRENO Y PLANICIE -->
-    <div class="absolute bottom-0 w-full h-3/4 bg-gradient(to top, #5c3a21 0%, #8B4513 30%, #2d993a 100%)"></div>
+    <div class="absolute bottom-0 w-full h-3/4 bg-gradient-to-t from-tierra to-pasto"></div>
 
     <!-- MONTAÑAS -->
     <div class="absolute bottom-[25%] left-0 w-[45%] h-[45%] bg-gradient(to top, #2f2f2f 0%, #5a5a5a 60%, #888888 100%) rounded-tr-[120px] sombra-suave"></div>
@@ -107,37 +107,45 @@
         <div class="w-2 h-20 bg-gradient(to top, #5c3a21 0%, #8B4513 100%) rounded-full sombra-suave"></div>
         <div class="absolute -top-14 -left-6 w-20 h-24 bg-gradient(to top, #1a5c22 0%, #2d993a 100%) rounded-full sombra-suave"></div>
     </div>
+    <div class="absolute bottom-2 right-[10%]">
+        <div class="w-3 h-26 bg-gradient(to top, #5c3a21 0%, #8B4513 100%) rounded-full sombra-suave"></div>
+        <div class="absolute -top-18 -left-9 w-28 h-32 bg-gradient(to top, #1a5c22 0%, #2d993a 100%) rounded-full sombra-suave"></div>
+    </div>
 
-    <!-- 🧍 TU JUGADOR, REAL Y COMPLETO -->
+    <!-- 🔑 LLAVE DEL BÚNKER TIRADA EN UN COSTADO -->
+    <div id="llave" class="absolute bottom-[22%] right-[25%] w-10 h-16 cursor-pointer transition-all duration-300 hover:scale-110">
+        <div class="w-full h-4 bg-metalBrillante rounded-t-full"></div>
+        <div class="w-full h-10 bg-metal rounded-b-lg flex items-center justify-center">
+            <div class="w-3 h-8 bg-metalBrillante rounded-sm"></div>
+        </div>
+        <p class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-white text-sm bg-black/60 px-2 py-1 rounded">🔑 LLAVE DEL BÚNKER</p>
+    </div>
+
+    <!-- PUERTA SECRETA - SOLO SE ABRE SI TENÉS LA LLAVE -->
+    <div id="puertaSecreta" class="absolute bottom-[27%] left-[11%] hidden">
+        <div class="w-28 h-36 bg-gradient(135deg, #2c3e50 0%, #607d8b 50%, #2c3e50 100%) border-2 border-gray-300/60 rounded-sm sombra-suave relieve flex items-center justify-center">
+            <div class="w-18 h-3 bg-gray-400 rounded-full"></div>
+            <p class="absolute -bottom-10 text-gray-200 text-sm font-medium">🔒 CERRADA - NECESITÁS LA LLAVE</p>
+        </div>
+    </div>
+
+    <!-- 🧍 TU JUGADOR, PARADO EN EL SUELO -->
     <div id="jugador" class="absolute bottom-[20%] left-1/2 -translate-x-1/2 transition-all duration-100 z-10">
-        <!-- Cuerpo del personaje -->
         <div class="relative w-12 h-24">
-            <!-- Cabeza -->
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-piel rounded-full sombra-suave">
                 <div class="absolute top-3 left-2 w-2 h-2 bg-black rounded-full"></div>
                 <div class="absolute top-3 right-2 w-2 h-2 bg-black rounded-full"></div>
                 <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-3 h-1 bg-red-300 rounded-full"></div>
             </div>
-            <!-- Cuerpo / Ropa -->
             <div class="absolute top-8 left-1/2 -translate-x-1/2 w-8 h-12 bg-ropa rounded-t-lg sombra-suave"></div>
-            <!-- Brazos -->
             <div class="absolute top-10 -left-2 w-3 h-8 bg-piel rounded-full"></div>
             <div class="absolute top-10 -right-2 w-3 h-8 bg-piel rounded-full"></div>
-            <!-- Piernas -->
             <div id="piernaIzq" class="absolute top-20 left-1 w-3 h-10 bg-ropa rounded-b-lg"></div>
             <div id="piernaDer" class="absolute top-20 right-1 w-3 h-10 bg-ropa rounded-b-lg"></div>
         </div>
     </div>
 
-    <!-- PUERTA SECRETA -->
-    <div id="puertaSecreta" class="absolute bottom-[27%] left-[11%] hidden">
-        <div class="w-28 h-36 bg-gradient(135deg, #2c3e50 0%, #607d8b 50%, #2c3e50 100%) border-2 border-gray-300/60 rounded-sm sombra-suave relieve flex items-center justify-center">
-            <div class="w-18 h-3 bg-gray-400 rounded-full"></div>
-            <p class="absolute -bottom-10 text-gray-200 text-sm font-medium">🔒 Solo el creador puede abrir</p>
-        </div>
-    </div>
-
-    <!-- 🎮 CONTROLES PARA MOVER AL JUGADOR (abajo a la derecha) -->
+    <!-- 🎮 CONTROLES PARA MOVERTE -->
     <div class="absolute bottom-8 right-8 z-10 grid grid-cols-3 gap-2">
         <div></div>
         <button id="botonArriba" class="w-16 h-16 bg-black/60 backdrop-blur-sm text-white text-3xl rounded-full sombra-suave active:bg-black/80">⬆️</button>
@@ -165,7 +173,7 @@
                     <br><br>
                     Cuando la activaron, se abrió un <strong>portal enorme</strong> que iba desde un puerto de Japón hasta acá, a Argentina. La fuerza fue tan grande que trajo toda la base, todo el equipo y a Medusa misma hasta este lugar, escondido adentro de la cueva, bajo tierra, donde nadie más lo encuentra.
                     <br><br>
-                    Ahora todo está acá. Solo vos sabés que existe.
+                    Ahora todo está acá. Solo vos sabés que existe, y necesitás la llave que encontraste para entrar.
                 </p>
             </div>
 
@@ -195,144 +203,5 @@
                     <li>Equipo para defender la base</li>
                     <li>Materiales y piezas que no se rompen</li>
                     <li>Todo lo que se necesita para mantener esto secreto y seguro</li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
-    <div id="efectoMedusa" class="fixed inset-0 bg-luzverde/90 hidden z-30 flex items-center justify-center">
-        <div class="text-center text-black">
-            <h1 class="text-7xl font-bold mb-6">🟢 ONDA EXPANSIVA</h1>
-            <p class="text-3xl">¡Todo se convierte en piedra! 🪨</p>
-            <p class="text-2xl mt-4">Medusa se mueve, cambia el mundo... 🇯🇵➡️🇦🇷</p>
-            <button onclick="cerrarEfecto()" class="mt-10 bg-black text-luzverde font-bold text-xl px-8 py-4 rounded-xl">
-                SEGUIR JUGANDO
-            </button>
-        </div>
-    </div>
-
-</div>
-
-<script>
-// Variables del jugador
-let posX = window.innerWidth / 2;
-let posY = window.innerHeight * 0.8;
-const velocidad = 8;
-let caminando = false;
-
-// Entrar al juego
-function entrarAlJuego() {
-    document.getElementById('pantallaInicio').classList.add('hidden');
-    document.getElementById('juego').classList.remove('hidden');
-    actualizarPosicion();
-}
-
-// Actualizar dónde está el jugador
-function actualizarPosicion() {
-    const jugador = document.getElementById('jugador');
-    jugador.style.left = posX + 'px';
-    jugador.style.bottom = posY + 'px';
-}
-
-// Animación de caminar
-function animarCaminar(estado) {
-    const izq = document.getElementById('piernaIzq');
-    const der = document.getElementById('piernaDer');
-    if(estado) {
-        izq.classList.add('animar-caminar');
-        der.classList.add('animar-caminar');
-    } else {
-        izq.classList.remove('animar-caminar');
-        der.classList.remove('animar-caminar');
-    }
-}
-
-// Controles con botones
-document.getElementById('botonArriba').addEventListener('mousedown', () => { caminando = true; mover('arriba'); });
-document.getElementById('botonAbajo').addEventListener('mousedown', () => { caminando = true; mover('abajo'); });
-document.getElementById('botonIzquierda').addEventListener('mousedown', () => { caminando = true; mover('izquierda'); });
-document.getElementById('botonDerecha').addEventListener('mousedown', () => { caminando = true; mover('derecha'); });
-
-document.addEventListener('mouseup', () => { caminando = false; animarCaminar(false); });
-document.addEventListener('touchend', () => { caminando = false; animarCaminar(false); });
-
-// También se puede mover con las teclas del teclado
-let teclasPresionadas = {};
-document.addEventListener('keydown', (e) => {
-    teclasPresionadas[e.key] = true;
-    caminando = true;
-    moverConTeclas();
-});
-document.addEventListener('keyup', (e) => {
-    teclasPresionadas[e.key] = false;
-    if(!Object.values(teclasPresionadas).some(v => v)) {
-        caminando = false;
-        animarCaminar(false);
-    }
-});
-
-function moverConTeclas() {
-    if(teclasPresionadas['ArrowUp'] || teclasPresionadas['w']) mover('arriba');
-    if(teclasPresionadas['ArrowDown'] || teclasPresionadas['s']) mover('abajo');
-    if(teclasPresionadas['ArrowLeft'] || teclasPresionadas['a']) mover('izquierda');
-    if(teclasPresionadas['ArrowRight'] || teclasPresionadas['d']) mover('derecha');
-}
-
-// Función para mover al personaje
-function mover(direccion) {
-    animarCaminar(true);
-    if(direccion === 'arriba' && posY < window.innerHeight * 0.9) posY += velocidad;
-    if(direccion === 'abajo' && posY > 50) posY -= velocidad;
-    if(direccion === 'izquierda' && posX > 20) posX -= velocidad;
-    if(direccion === 'derecha' && posX < window.innerWidth - 20) posX += velocidad;
-    actualizarPosicion();
-
-    // Ver si llegaste a la puerta secreta
-    const puertaX = window.innerWidth * 0.12;
-    const puertaY = window.innerHeight * 0.27;
-    if(Math.abs(posX - puertaX) < 30 && Math.abs(posY - puertaY) < 30) {
-        document.getElementById('puertaSecreta').classList.remove('hidden');
-    }
-}
-
-// Control del micrófono
-let microEncendido = true;
-function cambiarMicro() {
-    microEncendido = !microEncendido;
-    const boton = document.getElementById('botonMicro');
-    boton.textContent = microEncendido ? "🎤" : "🔇";
-    boton.classList.toggle('bg-red-600', !microEncendido);
-    boton.classList.toggle('bg-black/60', microEncendido);
-}
-
-// Clave para creador
-let clave = "";
-const CLAVE_CREADOR = "soyelcreador123";
-document.addEventListener('keydown', (e) => {
-    clave += e.key.toLowerCase();
-    if(clave.includes(CLAVE_CREADOR)) {
-        document.getElementById('puertaSecreta').classList.remove('hidden');
-        clave = "";
-    }
-});
-
-// Entrar y salir del secreto
-document.getElementById('puertaSecreta').addEventListener('click', () => {
-    document.getElementById('zonaSecreta').classList.remove('hidden');
-});
-function cerrarSecreto() {
-    document.getElementById('zonaSecreta').classList.add('hidden');
-}
-
-// Activar Medusa
-function activarMedusa() {
-    document.getElementById('efectoMedusa').classList.remove('hidden');
-}
-function cerrarEfecto() {
-    document.getElementById('efectoMedusa').classList.add('hidden');
-}
-</script>
-
-</body>
-                    </html>
                     
