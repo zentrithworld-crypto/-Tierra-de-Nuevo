@@ -3,72 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zentrith World 🌍</title>
+    <title>EL EXPERIMENTO 🔬</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Courier New', monospace; }
         body {
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+            background: #0a0a0d;
             min-height: 100vh;
-            color: #f0f9ff;
+            color: #e0e0e0;
             padding: 20px;
         }
         .contenedor {
-            max-width: 800px;
+            max-width: 750px;
             margin: 0 auto;
-            background: rgba(15, 23, 42, 0.85);
-            border-radius: 16px;
+            background: rgba(20, 20, 25, 0.92);
+            border-radius: 12px;
             padding: 30px;
-            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
-            border: 2px solid rgba(129, 140, 248, 0.4);
+            box-shadow: 0 0 40px rgba(120, 0, 0, 0.4);
+            border: 1px solid #3a0000;
         }
-        h1 { color: #a5b4fc; text-align: center; margin-bottom: 20px; font-size: 2.2rem; }
+        h1 { color: #991b1b; text-align: center; margin-bottom: 20px; letter-spacing: 3px; }
         .estado {
             display: flex;
             flex-wrap: wrap;
             gap: 15px;
             justify-content: space-around;
-            background: rgba(30, 41, 59, 0.7);
-            padding: 15px;
-            border-radius: 10px;
+            background: rgba(40, 0, 0, 0.4);
+            padding: 12px;
+            border-radius: 8px;
             margin-bottom: 25px;
-            font-weight: 500;
+            font-size: 0.95rem;
         }
         .texto {
-            font-size: 1.15rem;
-            line-height: 1.7;
+            font-size: 1.1rem;
+            line-height: 1.8;
             margin-bottom: 25px;
             padding: 20px;
-            background: rgba(51, 65, 85, 0.5);
-            border-radius: 10px;
-            border-left: 4px solid #818cf8;
+            background: rgba(30, 30, 35, 0.6);
+            border-radius: 8px;
+            border-left: 3px solid #7f1d1d;
+            color: #d4d4d4;
         }
         .opciones { display: flex; flex-direction: column; gap: 12px; }
         button {
-            padding: 14px 20px;
+            padding: 13px 18px;
             font-size: 1rem;
-            border: none;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #4f46e5, #6366f1);
-            color: white;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #292929, #1f1f1f);
+            color: #e5e5e5;
             cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
+            transition: all 0.25s ease;
         }
         button:hover {
-            background: linear-gradient(135deg, #4338ca, #4f46e5);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+            background: linear-gradient(135deg, #3f1f1f, #2a1515);
+            border-color: #7f1d1d;
+            transform: translateX(3px);
         }
+        .oscuro { background: #050505; color: #444; }
+        .advertencia { color: #dc2626; font-weight: bold; }
     </style>
 </head>
 <body>
     <div class="contenedor">
-        <h1>🌍 ZENTRITH WORLD</h1>
+        <h1>🔬 EL EXPERIMENTO</h1>
         <div class="estado">
-            <div>❤️ Salud: <span id="salud">100</span>/100</div>
-            <div>⭐ Puntos: <span id="puntos">0</span></div>
+            <div>❤️ Energía: <span id="energia">100</span>%</div>
+            <div>🔦 Linterna: <span id="linterna">No</span></div>
             <div>🔑 Llave: <span id="llave">No</span></div>
-            <div>⚔️ Espada: <span id="espada">No</span></div>
+            <div>📍 Zona: <span id="zona">Laboratorio</span></div>
         </div>
         <div class="texto" id="textoJuego"></div>
         <div class="opciones" id="botones"></div>
@@ -76,30 +78,32 @@
 
     <script>
         // Variables del juego
-        let salud = 100;
-        let puntos = 0;
+        let energia = 100;
+        let tieneLinterna = false;
+        let linternaEncendida = false;
         let tieneLlave = false;
-        let tieneEspada = false;
+        let estaOscuro = true;
 
-        // Elementos de pantalla
+        // Elementos
         const textoJuego = document.getElementById('textoJuego');
         const botones = document.getElementById('botones');
-        const txtSalud = document.getElementById('salud');
-        const txtPuntos = document.getElementById('puntos');
+        const txtEnergia = document.getElementById('energia');
+        const txtLinterna = document.getElementById('linterna');
         const txtLlave = document.getElementById('llave');
-        const txtEspada = document.getElementById('espada');
+        const txtZona = document.getElementById('zona');
 
-        // Actualizar datos en pantalla
+        // Actualizar pantalla
         function actualizarEstado() {
-            txtSalud.textContent = salud;
-            txtPuntos.textContent = puntos;
+            txtEnergia.textContent = energia;
+            txtLinterna.textContent = tieneLinterna ? (linternaEncendida ? 'Sí ✅ Encendida' : 'Sí ⚫ Apagada') : 'No ❌';
             txtLlave.textContent = tieneLlave ? 'Sí ✅' : 'No ❌';
-            txtEspada.textContent = tieneEspada ? 'Sí ✅' : 'No ❌';
+            txtZona.textContent = estaOscuro ? 'Muy oscuro...' : 'Iluminado';
+            document.body.classList.toggle('oscuro', estaOscuro && !linternaEncendida);
         }
 
-        // Mostrar texto y botones
+        // Mostrar mensaje y botones
         function mostrar(mensaje, opciones) {
-            textoJuego.textContent = mensaje;
+            textoJuego.innerHTML = mensaje;
             botones.innerHTML = '';
             opciones.forEach(op => {
                 const btn = document.createElement('button');
@@ -110,95 +114,210 @@
             actualizarEstado();
         }
 
-        // Pantalla inicial
+        // Inicio
         function inicio() {
+            estaOscuro = true;
             mostrar(
-                'Bienvenido a Zentrith, un mundo lleno de magia y misterios. Tu misión es explorar, conseguir objetos y descubrir el gran tesoro oculto. ¿Por dónde empezás tu aventura?',
+                'Despertás de golpe. No sabés dónde estás. Todo se ve muy oscuro. Escuchás un zumbido lejano y golpes secos que vienen de algún lado... Recordás poco: solo que acá pasan cosas raras. Tenés que salir. ¿Qué hacés primero?',
                 [
-                    { texto: '🌲 Bosque de Cristal', accion: bosque },
-                    { texto: '🏘️ Aldea de los Sabios', accion: aldea },
-                    { texto: '🌋 Montaña de Fuego', accion: montaña },
-                    { texto: '📋 Ver mi estado', accion: verEstado }
+                    { texto: '🔎 Buscar algo cerca tuyo', accion: buscarCerca },
+                    { texto: '🚪 Caminar hacia la puerta', accion: puertaCerrada },
+                    { texto: '👂 Quedarte quieto y escuchar', accion: escuchar }
                 ]
             );
         }
 
-        function bosque() {
-            let azar = Math.floor(Math.random() * 4);
-            let mensaje = '';
-            if (azar === 0) {
-                mensaje = '✨ Encontraste una gema mágica entre las ramas brillantes! Sumás 50 puntos.';
-                puntos += 50;
-            } else if (azar === 1) {
-                if (!tieneLlave) {
-                    mensaje = '🔑 Buscando entre raíces antiguas, encontraste una llave con grabados extraños!';
-                    tieneLlave = true;
-                    puntos += 20;
-                } else {
-                    mensaje = 'Caminás entre árboles que brillan suavemente, ya conocés bien este lugar.';
-                    puntos += 10;
-                }
-            } else if (azar === 2) {
-                mensaje = '🐉 Una pequeña criatura luminosa te regala una poción! Recuperás salud.';
-                salud = Math.min(salud + 20, 100);
-                puntos += 30;
+        function buscarCerca() {
+            energia -= 5;
+            if (!tieneLinterna) {
+                mostrar(
+                    'Tanteando entre muebles viejos y papeles tirados... tocás algo de plástico y vidrio: ¡es una linterna! Parece que tiene carga. ¿Ahora qué hacés?',
+                    [
+                        { texto: '🔦 Encender la linterna', accion: encenderLinterna },
+                        { texto: 'Buscar más cosas', accion: buscarMas },
+                        { texto: 'Ir hacia el pasillo', accion: pasillo }
+                    ]
+                );
+                tieneLinterna = true;
             } else {
-                mensaje = '🍃 El camino es tranquilo y lleno de luces hermosas, avanzás un buen tramo.';
-                puntos += 10;
+                mostrar(
+                    'Ya revisaste por acá. No hay nada nuevo, solo informes viejos con nombres tachados y símbolos extraños. Sentís que te miran...',
+                    [
+                        { texto: 'Seguir revisando', accion: buscarMas },
+                        { texto: 'Ir al pasillo', accion: pasillo }
+                    ]
+                );
             }
-            mostrar(mensaje + '\n¿Qué querés hacer ahora?', [
-                { texto: 'Seguir explorando el bosque', accion: bosque },
-                { texto: 'Ir a la Aldea', accion: aldea },
-                { texto: 'Volver al inicio', accion: inicio }
-            ]);
         }
 
-        function aldea() {
-            let mensaje = '';
-            if (!tieneEspada) {
-                mensaje = 'Un anciano sabio te recibe con una sonrisa y te dice: "Este mundo necesita valientes como vos". Te entrega una espada encantada que brilla con luz propia! ⚔️';
-                tieneEspada = true;
-                puntos += 40;
-            } else {
-                mensaje = 'Te saludan con cariño y te cuentan leyendas sobre el tesoro guardado en la cima de la montaña.';
-                puntos += 15;
-            }
-            mostrar(mensaje + '\n¿Seguís tu camino?', [
-                { texto: 'Ir al Bosque de Cristal', accion: bosque },
-                { texto: 'Subir a la Montaña de Fuego', accion: montaña },
-                { texto: 'Volver al inicio', accion: inicio }
-            ]);
-        }
-
-        function montaña() {
-            let mensaje = '';
-            if (tieneLlave && tieneEspada) {
-                mensaje = '🔥 Al llegar a la cueva más alta, la llave abre una puerta enorme y encontrás el TESORO DE ZENTRITH! 🎉 Conseguiste 200 puntos extra y completaste tu aventura!';
-                puntos += 200;
-            } else {
-                mensaje = 'El camino es muy difícil y peligroso, sentís que te falta algo importante para llegar hasta el final... Perdés un poco de salud.';
-                salud -= 15;
-            }
-            mostrar(mensaje, [
-                { texto: 'Volver a buscar lo que falta', accion: inicio },
-                { texto: 'Intentar de nuevo acá', accion: montaña }
-            ]);
-        }
-
-        function verEstado() {
+        function encenderLinterna() {
+            linternaEncendida = !linternaEncendida;
+            estaOscuro = false;
             mostrar(
-                'Tu estado actual en Zentrith:\n' +
-                'Salud: ' + salud + '/100\n' +
-                'Puntos acumulados: ' + puntos + '\n' +
-                'Tenés la llave antigua: ' + (tieneLlave ? 'Sí' : 'No') + '\n' +
-                'Tenés la espada encantada: ' + (tieneEspada ? 'Sí' : 'No'),
+                linternaEncendida 
+                    ? 'La luz ilumina poco, pero alcanza para ver paredes manchadas y puertas cerradas. Al fondo hay una puerta con un cartel rojo que dice "NO ENTRAR".'
+                    : 'Apagaste la linterna. Todo vuelve a ser oscuridad total.',
                 [
-                    { texto: 'Seguir explorando', accion: inicio }
+                    { texto: '🔦 Apagar/Encender de nuevo', accion: encenderLinterna },
+                    { texto: '🚶 Ir al pasillo largo', accion: pasillo },
+                    { texto: '📄 Leer papeles que hay en la mesa', accion: leerPapeles }
                 ]
             );
         }
 
-        // Empezar el juego
+        function leerPapeles() {
+            mostrar(
+                'Dicen cosas incomprensibles: "Sujeto 47... reacciona a la luz... no debe salir... el experimento cambió todo". De repente escuchás que una puerta se abre sola más allá...',
+                [
+                    { texto: '👀 Mirar qué se abrió', accion: verRuido },
+                    { texto: '🔑 Buscar llave en los cajones', accion: buscarLlave },
+                    { texto: '🏃 Ir rápido por el pasillo', accion: pasillo }
+                ]
+            );
+        }
+
+        function buscarLlave() {
+            energia -= 8;
+            if (!tieneLlave) {
+                tieneLlave = true;
+                mostrar(
+                    '¡Encontraste una llave pequeña de metal frío! Tiene grabado un símbolo extraño. Seguro abre alguna puerta importante. Pero escuchás pasos que se acercan...',
+                    [
+                        { texto: '🚪 Probar la puerta principal', accion: puertaSalida },
+                        { texto: '🙈 Esconderte rápido', accion: esconderse }
+                    ]
+                );
+            } else {
+                mostrar('Acá no hay nada más que encontrar. Tenés la llave, buscá la cerradura.', [
+                    { texto: 'Ir al pasillo', accion: pasillo }
+                ]);
+            }
+        }
+
+        function puertaCerrada() {
+            mostrar(
+                'La puerta tiene una cerradura vieja pero firme. No se abre a menos que tengas la llave. Del otro lado se escuchan ruidos suaves, como si alguien arrastrara algo pesado...',
+                tieneLlave 
+                    ? [{ texto: '🔑 Usar la llave ahora', accion: puertaSalida }]
+                    : [
+                        { texto: '🔎 Buscar la llave', accion: buscarLlave },
+                        { texto: 'Volver a buscar cosas', accion: buscarCerca }
+                    ]
+            );
+        }
+
+        function pasillo() {
+            energia -= 10;
+            mostrar(
+                'El pasillo es largo y oscuro. Hay puertas a los costados, la mayoría cerradas. Al fondo se ve una luz muy tenue y se escucha un ruido constante... como máquinas andando solas.',
+                [
+                    { texto: '🚶 Avanzar hasta el fondo', accion: finalPasillo },
+                    { texto: '🚪 Probar una puerta de al lado', accion: otraPuerta },
+                    { texto: 'Volver atrás rápido', accion: inicio }
+                ]
+            );
+        }
+
+        function finalPasillo() {
+            mostrar(
+                'Llegás al final. Hay una puerta grande con una placa que dice "SALA PRINCIPAL". La cerradura es igual a la de tu llave. Pero de adentro salen sonidos que ponen la piel de gallina...',
+                tieneLlave 
+                    ? [{ texto: '🔑 Abrir y entrar', accion: puertaSalida }]
+                    : [{ texto: 'Tenés que conseguir la llave primero', accion: buscarLlave }]
+            );
+        }
+
+        function puertaSalida() {
+            mostrar(
+                'Insertás la llave... da vueltas con un sonido seco. La puerta se abre despacio y se escucha un viento fresco: ¡es la salida! Pero mirás atrás una última vez y sentís que algo te está mirando desde la oscuridad... <br><br class="advertencia">¿Te vas ya o te quedás?',
+                [
+                    { texto: '🏃¡SALIR DE ACÁ YA!', accion: ganarJuego },
+                    { texto: '🔎 Mirar un segundo más...', accion: peligro }
+                ]
+            );
+        }
+
+        function escuchar() {
+            mostrar(
+                'Cerrás los ojos y te quedás en silencio... Los ruidos no son de viento. Son pasos. Y se están acercando cada vez más. No tenés mucho tiempo.',
+                [
+                    { texto: '🔦 Buscar luz rápido', accion: buscarCerca },
+                    { texto: '🏃 Correr sin mirar', accion: pasillo }
+                ]
+            );
+        }
+
+        function verRuido() {
+            energia -= 15;
+            mostrar(
+                'Una puerta al fondo se abrió de golpe. No se ve a nadie, pero se siente una corriente de aire helado. Escuchás una voz muy baja que dice: "No te vayas... todavía no terminamos..."',
+                [
+                    { texto: '😨 Ir hacia la voz', accion: peligro },
+                    { texto: '🏃 Correr hacia la salida', accion: puertaCerrada }
+                ]
+            );
+        }
+
+        function esconderse() {
+            energia -= 20;
+            mostrar(
+                'Te metés detrás de unos estantes altos. Los pasos pasan justo al lado tuyo. Sentís una respiración pesada. Se quedan quietos un rato... y luego se van poco a poco. ¡Fue por poco!',
+                [
+                    { texto: 'Salir rápido y buscar la salida', accion: puertaSalida }
+                ]
+            );
+        }
+
+        function buscarMas() {
+            energia -= 6;
+            let azar = Math.floor(Math.random() * 2);
+            if (azar === 0 && !tieneLlave) {
+                mostrar('Encontrás un papel arrugado que dice: "La llave está donde guardamos lo importante". Pero no encontraste la llave todavía.', [
+                    { texto: 'Seguir buscando', accion: buscarLlave },
+                    { texto: 'Ir al pasillo', accion: pasillo }
+                ]);
+            } else {
+                mostrar('No hay nada más acá. Solo más papeles viejos y polvo. Sentís que te cansás un poco más.', [
+                    { texto: 'Buscar en otro lado', accion: buscarLlave },
+                    { texto: 'Ir al pasillo', accion: pasillo }
+                ]);
+            }
+        }
+
+        function otraPuerta() {
+            mostrar('Está cerrada con candado viejo, no sirve romperla. Mejor andá a la puerta principal o busca la llave verdadera.', [
+                { texto: 'Seguir al fondo', accion: finalPasillo }
+            ]);
+        }
+
+        function peligro() {
+            mostrar(
+                'No deberías haberte quedado mirando... Algo salió de la oscuridad y te tapó la vista. No podés moverte. Todo se vuelve negro de golpe... <br><br class="advertencia">💀 FINAL: Te quedaste atrapado en el experimento.',
+                [
+                    { texto: '🔄 Intentar escapar otra vez', accion: reiniciar }
+                ]
+            );
+        }
+
+        function ganarJuego() {
+            mostrar(
+                'Salís y cerrás la puerta detrás tuyo. Corrés hasta llegar a un camino lejos de ese lugar. Ya no escuchás nada. Lo lograste... pero sabés que esa puerta sigue ahí, esperando a alguien más. <br><br> 🎉 ¡LOGRASTE ESCAPAR DE EL EXPERIMENTO!',
+                [
+                    { texto: '🔄 Jugar de nuevo', accion: reiniciar }
+                ]
+            );
+        }
+
+        function reiniciar() {
+            energia = 100;
+            tieneLinterna = false;
+            linternaEncendida = false;
+            tieneLlave = false;
+            estaOscuro = true;
+            inicio();
+        }
+
+        // Empezar
         inicio();
     </script>
 </body>
