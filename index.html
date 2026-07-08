@@ -3,205 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tierra de Nuevo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        pasto: '#2d993a',
-                        pastoOscuro: '#1a5c22',
-                        tierra: '#8B4513',
-                        tierraClara: '#c19a6b',
-                        piedra: '#4a4a4a',
-                        piedraClara: '#7a7a7a',
-                        metal: '#2c3e50',
-                        metalBrillante: '#607d8b',
-                        luzverde: '#00ff88',
-                        cielo: '#87ceeb',
-                        cieloOscuro: '#4682b4',
-                        piel: '#f5cba7',
-                        ropa: '#2c3e50',
-                    }
-                }
-            }
+    <title>Zentrith World 🌍</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #312e81 100%);
+            min-height: 100vh;
+            color: #f0f9ff;
+            padding: 20px;
         }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .sombra-suave {
-                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            }
-            .brillo-verde {
-                box-shadow: 0 0 30px #00ff88, 0 0 60px #00ff8880;
-            }
-            .degradado-cielo {
-                background: linear-gradient(180deg, #1e3a8a 0%, #3b82f6 40%, #93c5fd 100%);
-            }
-            .relieve {
-                box-shadow: inset 0 2px 2px rgba(255,255,255,0.15), inset 0 -2px 2px rgba(0,0,0,0.2);
-            }
-            .animar-caminar {
-                animation: caminar 0.4s infinite alternate ease-in-out;
-            }
-            @keyframes caminar {
-                from { transform: translateY(0); }
-                to { transform: translateY(-3px); }
-            }
+        .contenedor {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(15, 23, 42, 0.85);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(99, 102, 241, 0.3);
+            border: 2px solid rgba(129, 140, 248, 0.4);
+        }
+        h1 { color: #a5b4fc; text-align: center; margin-bottom: 20px; font-size: 2.2rem; }
+        .estado {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: space-around;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+        .texto {
+            font-size: 1.15rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(51, 65, 85, 0.5);
+            border-radius: 10px;
+            border-left: 4px solid #818cf8;
+        }
+        .opciones { display: flex; flex-direction: column; gap: 12px; }
+        button {
+            padding: 14px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #4338ca, #4f46e5);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
         }
     </style>
 </head>
-<body class="min-h-screen overflow-hidden select-none">
-
-<!-- PANTALLA DE INICIO -->
-<div id="pantallaInicio" class="fixed inset-0 degradado-cielo flex items-center justify-center z-50">
-    <div class="text-center bg-black/40 p-12 rounded-3xl sombra-suave">
-        <h1 class="text-7xl font-bold text-white mb-10 tracking-wider">TIERRA DE NUEVO</h1>
-        <button onclick="entrarAlJuego()" class="bg-green-600 text-white text-2xl font-bold px-16 py-6 rounded-2xl sombra-suave hover:bg-green-700 transition-all transform hover:scale-105">
-            🚀 INICIAR JUEGO
-        </button>
-    </div>
-</div>
-
-<!-- EL JUEGO -->
-<div id="juego" class="hidden min-h-screen relative overflow-hidden">
-
-    <!-- CIELO CON NUBES -->
-    <div class="absolute top-0 left-0 w-full h-2/3 degradado-cielo">
-        <div class="absolute top-10 left-10 w-32 h-16 bg-white/80 rounded-full blur-md"></div>
-        <div class="absolute top-16 left-20 w-40 h-20 bg-white/70 rounded-full blur-md"></div>
-        <div class="absolute top-32 right-20 w-36 h-18 bg-white/60 rounded-full blur-md"></div>
-    </div>
-
-    <!-- BOTONES DE ARRIBA -->
-    <div class="absolute top-6 left-6 z-10">
-        <a href="https://discord.com" target="_blank" class="bg-[#5865F2] text-white text-xl font-bold px-6 py-4 rounded-xl sombra-suave flex items-center gap-3 hover:bg-[#4752c4] transition-all">
-            💬 DISCORD OFICIAL
-        </a>
-    </div>
-    <div class="absolute top-6 right-6 z-10">
-        <button id="botonMicro" onclick="cambiarMicro()" class="bg-black/60 backdrop-blur-sm text-white text-2xl p-5 rounded-full sombra-suave hover:bg-black/70 transition-all">
-            🎤
-        </button>
-    </div>
-
-    <!-- TERRENO Y PLANICIE -->
-    <div class="absolute bottom-0 w-full h-3/4 bg-gradient-to-t from-tierra to-pasto"></div>
-
-    <!-- MONTAÑAS -->
-    <div class="absolute bottom-[25%] left-0 w-[45%] h-[45%] bg-gradient(to top, #2f2f2f 0%, #5a5a5a 60%, #888888 100%) rounded-tr-[120px] sombra-suave"></div>
-    <div class="absolute bottom-[15%] right-0 w-[55%] h-[55%] bg-gradient(to top, #2f2f2f 0%, #5a5a5a 60%, #888888 100%) rounded-tl-[150px] sombra-suave"></div>
-
-    <!-- CUEVA -->
-    <div class="absolute bottom-[30%] left-[12%] w-28 h-24 bg-gradient(to top, #111111 0%, #333333 100%) rounded-t-lg sombra-suave">
-        <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-16 h-14 bg-black rounded-t-md"></div>
-    </div>
-
-    <!-- ÁRBOLES -->
-    <div class="absolute bottom-4 left-[5%]">
-        <div class="w-3 h-24 bg-gradient(to top, #5c3a21 0%, #8B4513 100%) rounded-full sombra-suave"></div>
-        <div class="absolute -top-16 -left-8 w-24 h-28 bg-gradient(to top, #1a5c22 0%, #2d993a 100%) rounded-full sombra-suave"></div>
-    </div>
-    <div class="absolute bottom-6 left-[20%]">
-        <div class="w-2 h-20 bg-gradient(to top, #5c3a21 0%, #8B4513 100%) rounded-full sombra-suave"></div>
-        <div class="absolute -top-14 -left-6 w-20 h-24 bg-gradient(to top, #1a5c22 0%, #2d993a 100%) rounded-full sombra-suave"></div>
-    </div>
-    <div class="absolute bottom-2 right-[10%]">
-        <div class="w-3 h-26 bg-gradient(to top, #5c3a21 0%, #8B4513 100%) rounded-full sombra-suave"></div>
-        <div class="absolute -top-18 -left-9 w-28 h-32 bg-gradient(to top, #1a5c22 0%, #2d993a 100%) rounded-full sombra-suave"></div>
-    </div>
-
-    <!-- 🔑 LLAVE DEL BÚNKER TIRADA EN UN COSTADO -->
-    <div id="llave" class="absolute bottom-[22%] right-[25%] w-10 h-16 cursor-pointer transition-all duration-300 hover:scale-110">
-        <div class="w-full h-4 bg-metalBrillante rounded-t-full"></div>
-        <div class="w-full h-10 bg-metal rounded-b-lg flex items-center justify-center">
-            <div class="w-3 h-8 bg-metalBrillante rounded-sm"></div>
+<body>
+    <div class="contenedor">
+        <h1>🌍 ZENTRITH WORLD</h1>
+        <div class="estado">
+            <div>❤️ Salud: <span id="salud">100</span>/100</div>
+            <div>⭐ Puntos: <span id="puntos">0</span></div>
+            <div>🔑 Llave: <span id="llave">No</span></div>
+            <div>⚔️ Espada: <span id="espada">No</span></div>
         </div>
-        <p class="absolute -bottom-8 left-1/2 -translate-x-1/2 text-white text-sm bg-black/60 px-2 py-1 rounded">🔑 LLAVE DEL BÚNKER</p>
+        <div class="texto" id="textoJuego"></div>
+        <div class="opciones" id="botones"></div>
     </div>
 
-    <!-- PUERTA SECRETA - SOLO SE ABRE SI TENÉS LA LLAVE -->
-    <div id="puertaSecreta" class="absolute bottom-[27%] left-[11%] hidden">
-        <div class="w-28 h-36 bg-gradient(135deg, #2c3e50 0%, #607d8b 50%, #2c3e50 100%) border-2 border-gray-300/60 rounded-sm sombra-suave relieve flex items-center justify-center">
-            <div class="w-18 h-3 bg-gray-400 rounded-full"></div>
-            <p class="absolute -bottom-10 text-gray-200 text-sm font-medium">🔒 CERRADA - NECESITÁS LA LLAVE</p>
-        </div>
-    </div>
+    <script>
+        // Variables del juego
+        let salud = 100;
+        let puntos = 0;
+        let tieneLlave = false;
+        let tieneEspada = false;
 
-    <!-- 🧍 TU JUGADOR, PARADO EN EL SUELO -->
-    <div id="jugador" class="absolute bottom-[20%] left-1/2 -translate-x-1/2 transition-all duration-100 z-10">
-        <div class="relative w-12 h-24">
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-10 bg-piel rounded-full sombra-suave">
-                <div class="absolute top-3 left-2 w-2 h-2 bg-black rounded-full"></div>
-                <div class="absolute top-3 right-2 w-2 h-2 bg-black rounded-full"></div>
-                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-3 h-1 bg-red-300 rounded-full"></div>
-            </div>
-            <div class="absolute top-8 left-1/2 -translate-x-1/2 w-8 h-12 bg-ropa rounded-t-lg sombra-suave"></div>
-            <div class="absolute top-10 -left-2 w-3 h-8 bg-piel rounded-full"></div>
-            <div class="absolute top-10 -right-2 w-3 h-8 bg-piel rounded-full"></div>
-            <div id="piernaIzq" class="absolute top-20 left-1 w-3 h-10 bg-ropa rounded-b-lg"></div>
-            <div id="piernaDer" class="absolute top-20 right-1 w-3 h-10 bg-ropa rounded-b-lg"></div>
-        </div>
-    </div>
+        // Elementos de pantalla
+        const textoJuego = document.getElementById('textoJuego');
+        const botones = document.getElementById('botones');
+        const txtSalud = document.getElementById('salud');
+        const txtPuntos = document.getElementById('puntos');
+        const txtLlave = document.getElementById('llave');
+        const txtEspada = document.getElementById('espada');
 
-    <!-- 🎮 CONTROLES PARA MOVERTE -->
-    <div class="absolute bottom-8 right-8 z-10 grid grid-cols-3 gap-2">
-        <div></div>
-        <button id="botonArriba" class="w-16 h-16 bg-black/60 backdrop-blur-sm text-white text-3xl rounded-full sombra-suave active:bg-black/80">⬆️</button>
-        <div></div>
-        <button id="botonIzquierda" class="w-16 h-16 bg-black/60 backdrop-blur-sm text-white text-3xl rounded-full sombra-suave active:bg-black/80">⬅️</button>
-        <div></div>
-        <button id="botonDerecha" class="w-16 h-16 bg-black/60 backdrop-blur-sm text-white text-3xl rounded-full sombra-suave active:bg-black/80">➡️</button>
-        <div></div>
-        <button id="botonAbajo" class="w-16 h-16 bg-black/60 backdrop-blur-sm text-white text-3xl rounded-full sombra-suave active:bg-black/80">⬇️</button>
-    </div>
+        // Actualizar datos en pantalla
+        function actualizarEstado() {
+            txtSalud.textContent = salud;
+            txtPuntos.textContent = puntos;
+            txtLlave.textContent = tieneLlave ? 'Sí ✅' : 'No ❌';
+            txtEspada.textContent = tieneEspada ? 'Sí ✅' : 'No ❌';
+        }
 
-    <!-- ADENTRO DEL BÚNKER -->
-    <div id="zonaSecreta" class="fixed inset-0 bg-gradient(to bottom, #121212 0%, #1f1f1f 100%) hidden z-20 overflow-y-auto">
-        <div class="max-w-4xl mx-auto p-8 text-white">
-            <button onclick="cerrarSecreto()" class="mb-8 bg-gradient(to bottom, #dc2626 0%, #991b1b 100%) px-8 py-4 rounded-xl font-bold sombra-suave hover:brightness-110 transition-all">
-                ← VOLVER AL MUNDO
-            </button>
+        // Mostrar texto y botones
+        function mostrar(mensaje, opciones) {
+            textoJuego.textContent = mensaje;
+            botones.innerHTML = '';
+            opciones.forEach(op => {
+                const btn = document.createElement('button');
+                btn.textContent = op.texto;
+                btn.onclick = op.accion;
+                botones.appendChild(btn);
+            });
+            actualizarEstado();
+        }
 
-            <h1 class="text-4xl font-bold text-center mb-8 text-gray-100">🔴 BÚNKER SUBTERRÁNEO - BASE ARGENTINA</h1>
+        // Pantalla inicial
+        function inicio() {
+            mostrar(
+                'Bienvenido a Zentrith, un mundo lleno de magia y misterios. Tu misión es explorar, conseguir objetos y descubrir el gran tesoro oculto. ¿Por dónde empezás tu aventura?',
+                [
+                    { texto: '🌲 Bosque de Cristal', accion: bosque },
+                    { texto: '🏘️ Aldea de los Sabios', accion: aldea },
+                    { texto: '🌋 Montaña de Fuego', accion: montaña },
+                    { texto: '📋 Ver mi estado', accion: verEstado }
+                ]
+            );
+        }
 
-            <div class="bg-gray-800/70 p-6 rounded-xl mb-8">
-                <h2 class="text-2xl font-bold mb-4">📜 LA HISTORIA</h2>
-                <p class="text-lg leading-relaxed">
-                    Antes, esta base estaba en <strong>Japón</strong>. Todo estaba ahí guardado, hasta que alguien la encontró y activó a Medusa sin saber lo que pasaba.
-                    <br><br>
-                    Cuando la activaron, se abrió un <strong>portal enorme</strong> que iba desde un puerto de Japón hasta acá, a Argentina. La fuerza fue tan grande que trajo toda la base, todo el equipo y a Medusa misma hasta este lugar, escondido adentro de la cueva, bajo tierra, donde nadie más lo encuentra.
-                    <br><br>
-                    Ahora todo está acá. Solo vos sabés que existe, y necesitás la llave que encontraste para entrar.
-                </p>
-            </div>
+        function bosque() {
+            let azar = Math.floor(Math.random() * 4);
+            let mensaje = '';
+            if (azar === 0) {
+                mensaje = '✨ Encontraste una gema mágica entre las ramas brillantes! Sumás 50 puntos.';
+                puntos += 50;
+            } else if (azar === 1) {
+                if (!tieneLlave) {
+                    mensaje = '🔑 Buscando entre raíces antiguas, encontraste una llave con grabados extraños!';
+                    tieneLlave = true;
+                    puntos += 20;
+                } else {
+                    mensaje = 'Caminás entre árboles que brillan suavemente, ya conocés bien este lugar.';
+                    puntos += 10;
+                }
+            } else if (azar === 2) {
+                mensaje = '🐉 Una pequeña criatura luminosa te regala una poción! Recuperás salud.';
+                salud = Math.min(salud + 20, 100);
+                puntos += 30;
+            } else {
+                mensaje = '🍃 El camino es tranquilo y lleno de luces hermosas, avanzás un buen tramo.';
+                puntos += 10;
+            }
+            mostrar(mensaje + '\n¿Qué querés hacer ahora?', [
+                { texto: 'Seguir explorando el bosque', accion: bosque },
+                { texto: 'Ir a la Aldea', accion: aldea },
+                { texto: 'Volver al inicio', accion: inicio }
+            ]);
+        }
 
-            <div class="bg-gray-800/70 p-6 rounded-xl mb-8 text-center">
-                <h2 class="text-2xl font-bold mb-6">🟢 EL PORTAL Y MEDUSA</h2>
-                <div class="w-64 h-64 mx-auto rounded-full bg-luzverde/20 brillo-verde flex items-center justify-center mb-6">
-                    <div class="w-48 h-48 rounded-full bg-black/80 flex items-center justify-center">
-                        <p class="text-luzverde text-xl font-bold">MEDUSA</p>
-                    </div>
-                </div>
-                <p class="text-lg">
-                    Esta es Medusa. Si la activás, sale una onda expansiva tan fuerte que todo lo que toca se convierte en piedra al instante. Puede salir volando de un país a otro, y cambia todo lo que hay a su alrededor.
-                    <br><br>
-                    Desde que vino acá, todo este lugar se volvió <strong>Argentina de Nuevo</strong>, como si el país hubiera renacido con su poder.
-                </p>
-                <button onclick="activarMedusa()" class="mt-6 bg-luzverde text-black font-bold text-xl px-8 py-4 rounded-xl hover:bg-[#00dd77] transition-all">
-                    ⚠️ ACTIVAR MEDUSA
-                </button>
-            </div>
+        function aldea() {
+            let mensaje = '';
+            if (!tieneEspada) {
+                mensaje = 'Un anciano sabio te recibe con una sonrisa y te dice: "Este mundo necesita valientes como vos". Te entrega una espada encantada que brilla con luz propia! ⚔️';
+                tieneEspada = true;
+                puntos += 40;
+            } else {
+                mensaje = 'Te saludan con cariño y te cuentan leyendas sobre el tesoro guardado en la cima de la montaña.';
+                puntos += 15;
+            }
+            mostrar(mensaje + '\n¿Seguís tu camino?', [
+                { texto: 'Ir al Bosque de Cristal', accion: bosque },
+                { texto: 'Subir a la Montaña de Fuego', accion: montaña },
+                { texto: 'Volver al inicio', accion: inicio }
+            ]);
+        }
 
-            <div class="bg-gray-800/70 p-6 rounded-xl">
-                <h2 class="text-2xl font-bold mb-4">🔫 ARMAS Y EQUIPO GUARDADO</h2>
-                <p class="text-lg mb-4">Acá hay de todo, muy bien guardado y resistente:</p>
-                <ul class="list-disc list-inside text-lg space-y-2">
-                    <li>Rifles de todo tipo</li>
-                    <li>Armas y herramientas fuertes</li>
-                    <li>Equipo para defender la base</li>
-                    <li>Materiales y piezas que no se rompen</li>
-                    <li>Todo lo que se necesita para mantener esto secreto y seguro</li>
+        function montaña() {
+            let mensaje = '';
+            if (tieneLlave && tieneEspada) {
+                mensaje = '🔥 Al llegar a la cueva más alta, la llave abre una puerta enorme y encontrás el TESORO DE ZENTRITH! 🎉 Conseguiste 200 puntos extra y completaste tu aventura!';
+                puntos += 200;
+            } else {
+                mensaje = 'El camino es muy difícil y peligroso, sentís que te falta algo importante para llegar hasta el final... Perdés un poco de salud.';
+                salud -= 15;
+            }
+            mostrar(mensaje, [
+                { texto: 'Volver a buscar lo que falta', accion: inicio },
+                { texto: 'Intentar de nuevo acá', accion: montaña }
+            ]);
+        }
 
-                    
+        function verEstado() {
+            mostrar(
+                'Tu estado actual en Zentrith:\n' +
+                'Salud: ' + salud + '/100\n' +
+                'Puntos acumulados: ' + puntos + '\n' +
+                'Tenés la llave antigua: ' + (tieneLlave ? 'Sí' : 'No') + '\n' +
+                'Tenés la espada encantada: ' + (tieneEspada ? 'Sí' : 'No'),
+                [
+                    { texto: 'Seguir explorando', accion: inicio }
+                ]
+            );
+        }
+
+        // Empezar el juego
+        inicio();
+    </script>
+</body>
+</html>
